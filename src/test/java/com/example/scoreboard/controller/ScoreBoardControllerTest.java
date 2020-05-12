@@ -1,0 +1,104 @@
+package com.example.scoreboard.controller;
+
+import com.example.scoreboard.model.ScoreBoard;
+import com.example.scoreboard.repository.ScoreBoardRepository;
+import com.example.scoreboard.util.TestDataUtil;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+class ScoreBoardControllerTest {
+
+    @InjectMocks
+    private ScoreBoardController scoreBoardController;
+
+    @Mock
+    private ScoreBoardRepository scoreBoardRepository;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.initMocks(this);
+    }
+
+    @Test
+    void testShowHomePage() {
+        // Arrangement
+        String expectedString = "Welcome to the score board service.";
+
+        // Act
+        String actualString = scoreBoardController.showHomePage();
+
+        // Assert
+        assertEquals(actualString, expectedString);
+    }
+
+    @Test
+    void testFindById() {
+        // arrange
+        ScoreBoard expectedScoreBoard = TestDataUtil.createScoreBoard();
+
+        // act
+        when(scoreBoardRepository.findById(1l)).thenReturn(java.util.Optional.of(expectedScoreBoard));
+        ScoreBoard actualScoreBoard = scoreBoardController.findById(1l);
+
+        // assert
+        assertNotNull(actualScoreBoard);
+        assertSame(expectedScoreBoard, actualScoreBoard);
+    }
+
+    @Test
+    void testGetAll() {
+        // arrange
+        List<ScoreBoard> expectScoreBoardList = TestDataUtil.createScoreBoardList(5);
+
+        // act
+        when(scoreBoardRepository.findAll()).thenReturn(expectScoreBoardList);
+        List<ScoreBoard> actualScoreBoardList = scoreBoardController.getAll();
+
+        // assert
+        assertNotNull(actualScoreBoardList);
+        assertEquals(actualScoreBoardList.size(), expectScoreBoardList.size());
+        assertIterableEquals(actualScoreBoardList, expectScoreBoardList);
+    }
+
+    @Test
+    void testAddOrUpdate() {
+        // arrange
+        ScoreBoard scoreBoard = TestDataUtil.createScoreBoard();
+
+        // act
+        when(scoreBoardRepository.save(scoreBoard)).thenReturn(scoreBoard);
+        ResponseEntity<?> responseEntity = scoreBoardController.addOrUpdate(scoreBoard);
+
+        // assert
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(responseEntity.getBody(), "ScoreBoard submission successfully");
+    }
+
+    @Test
+    void testDeleteScoreBoard() {
+        // arrange
+        long id=1L;
+
+        // act
+        ResponseEntity<?> responseEntity = scoreBoardController.deleteScoreBoard(id);
+
+        // assert
+        verify(scoreBoardRepository, times(1)).deleteById(eq(id));
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(responseEntity.getBody(), "Score board deleted successfully");
+    }
+}
