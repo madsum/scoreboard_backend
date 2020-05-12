@@ -21,14 +21,8 @@ public class ScoreBoardController {
         return "Welcome to the score board service.";
     }
 
-    @GetMapping(path = "/score")
-    public ScoreBoard findById(@RequestParam(required=true) long id) {
-        Optional<ScoreBoard> scoreBoard = boardRepository.findById(id);
-        return scoreBoard.orElse(null);
-    }
-
     @GetMapping(path = "/score/{id}")
-    public ScoreBoard findById2(@PathVariable(required=true) long id) {
+    public ScoreBoard findById(@PathVariable(required=true) long id) {
         Optional<ScoreBoard> scoreBoard = boardRepository.findById(id);
         return scoreBoard.orElse(null);
     }
