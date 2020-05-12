@@ -16,29 +16,39 @@ public class ScoreBoardController {
     @Autowired
     private ScoreBoardRepository boardRepository;
 
+    @GetMapping(path = "/")
+    public String showHomePage() {
+        return "Welcome to the score board service.";
+    }
 
     @GetMapping(path = "/score")
-    public ResponseEntity<?> findById(@RequestParam(required=true) long id) {
-        Optional<ScoreBoard> profile = boardRepository.findById(id);
-        if(profile.isPresent()){
-            return new ResponseEntity<>(profile, HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>("Score not fond", HttpStatus.NOT_FOUND);
-        }
+    public ScoreBoard findById(@RequestParam(required=true) long id) {
+        Optional<ScoreBoard> scoreBoard = boardRepository.findById(id);
+        return scoreBoard.orElse(null);
+    }
+
+    @GetMapping(path = "/score/{id}")
+    public ScoreBoard findById2(@PathVariable(required=true) long id) {
+        Optional<ScoreBoard> scoreBoard = boardRepository.findById(id);
+        return scoreBoard.orElse(null);
+
     }
 
     @GetMapping(path = "/all/score")
-    public ResponseEntity<?> getAll() {
-        List<ScoreBoard> result = boardRepository.findAll();
-        return new ResponseEntity<>(result, HttpStatus.OK);
+    public List<ScoreBoard> getAll() {
+        return boardRepository.findAll();
     }
 
-
     @PostMapping(path = "/score")
-    public ResponseEntity<?> addOrUpdateProfileById(@RequestBody ScoreBoard scoreBoard) {
+    public ResponseEntity<?> addOrUpdate(@RequestBody ScoreBoard scoreBoard) {
         boardRepository.save(scoreBoard);
         return new ResponseEntity<>("ScoreBoard submission successfully", HttpStatus.OK);
     }
 
+    @DeleteMapping(path = "/score/{id}")
+    public ResponseEntity<?> deleteScoreBoard(@PathVariable(required = true) long id){
+        boardRepository.deleteById(id);
+        return new ResponseEntity<>("Score board deleted successfully", HttpStatus.OK);
+    }
 
 }
