@@ -31,7 +31,6 @@ public class ScoreBoardController {
     public ScoreBoard findById2(@PathVariable(required=true) long id) {
         Optional<ScoreBoard> scoreBoard = boardRepository.findById(id);
         return scoreBoard.orElse(null);
-
     }
 
     @GetMapping(path = "/all/score")
@@ -50,5 +49,4 @@ public class ScoreBoardController {
         boardRepository.deleteById(id);
         return new ResponseEntity<>("Score board deleted successfully", HttpStatus.OK);
     }
-
 }
