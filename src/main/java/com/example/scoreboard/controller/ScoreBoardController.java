@@ -34,6 +34,7 @@ public class ScoreBoardController {
 
     @PostMapping(path = "/score")
     public ResponseEntity<?> addOrUpdate(@RequestBody ScoreBoard scoreBoard) {
+
         boardRepository.save(scoreBoard);
         return new ResponseEntity<>("ScoreBoard submission successfully", HttpStatus.OK);
     }

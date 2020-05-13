@@ -20,7 +20,7 @@ public class ScoreboardApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
 						.allowedMethods("GET", "PUT", "POST", "PATCH", "DELETE", "OPTIONS")
-						.allowedOrigins("*");
+						.allowedOrigins("*", "https://scoreboard-frontend.herokuapp.com/" );
 			}
 		};
 	}
