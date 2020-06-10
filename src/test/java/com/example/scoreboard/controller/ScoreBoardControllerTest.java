@@ -3,16 +3,20 @@ package com.example.scoreboard.controller;
 import com.example.scoreboard.model.ScoreBoard;
 import com.example.scoreboard.repository.ScoreBoardRepository;
 import com.example.scoreboard.util.TestDataUtil;
+import org.hamcrest.Matcher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -28,6 +32,14 @@ class ScoreBoardControllerTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
     }
+
+    @Test
+    void test(){
+        TestRestTemplate testRestTemplate = new TestRestTemplate();
+       ResponseEntity<?> res = testRestTemplate.getForEntity("http://localhost:8080/", String.class);
+       assertEquals(res.getStatusCode(), equalTo(HttpStatus.OK));
+    }
+
 
     @Test
     void testShowHomePage() {

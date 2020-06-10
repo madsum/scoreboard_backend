@@ -2,6 +2,8 @@ package com.example.scoreboard.controller;
 
 import com.example.scoreboard.model.ScoreBoard;
 import com.example.scoreboard.repository.ScoreBoardRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,9 +11,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
+@RequestMapping("scoreBorad")
 @RestController
 public class ScoreBoardController {
+
+    Logger logger = LoggerFactory.getLogger(ScoreBoardController.class);
 
     @Autowired
     private ScoreBoardRepository boardRepository;
@@ -32,11 +36,16 @@ public class ScoreBoardController {
         return boardRepository.findAll();
     }
 
-    @PostMapping(path = "/score")
+    @PostMapping(path = "/add/score")
     public ResponseEntity<?> addOrUpdate(@RequestBody ScoreBoard scoreBoard) {
-
         boardRepository.save(scoreBoard);
         return new ResponseEntity<>("ScoreBoard submission successfully", HttpStatus.OK);
+    }
+
+    @PutMapping(path = "/update/score")
+    public ResponseEntity<?> updateScore(@RequestBody ScoreBoard scoreBoard) {
+        boardRepository.save(scoreBoard);
+        return new ResponseEntity<>("ScoreBoard update successfully", HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/score/{id}")
