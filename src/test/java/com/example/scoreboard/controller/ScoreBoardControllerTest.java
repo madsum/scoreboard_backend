@@ -12,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -28,18 +29,13 @@ class ScoreBoardControllerTest {
     @Mock
     private ScoreBoardRepository scoreBoardRepository;
 
+    @Mock
+    private RestTemplate restTemplate;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
     }
-
-    @Test
-    void test(){
-        TestRestTemplate testRestTemplate = new TestRestTemplate();
-       ResponseEntity<?> res = testRestTemplate.getForEntity("http://localhost:8080/", String.class);
-       assertEquals(res.getStatusCode(), equalTo(HttpStatus.OK));
-    }
-
 
     @Test
     void testShowHomePage() {
