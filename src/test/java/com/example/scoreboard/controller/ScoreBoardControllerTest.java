@@ -81,15 +81,15 @@ class ScoreBoardControllerTest {
     @Test
     void testAddOrUpdate() {
         // arrange
-        ScoreBoard expectedScoreBoard = TestDataUtil.createScoreBoard();
+        ScoreBoard scoreBoard = TestDataUtil.createScoreBoard();
 
         // act
-        when(scoreBoardRepository.save(expectedScoreBoard)).thenReturn(expectedScoreBoard);
-        ResponseEntity<?> responseEntity = scoreBoardController.addOrUpdate(expectedScoreBoard);
+        when(scoreBoardRepository.save(scoreBoard)).thenReturn(scoreBoard);
+        ResponseEntity<?> responseEntity = scoreBoardController.addOrUpdate(scoreBoard);
 
         // assert
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertSame(responseEntity.getBody(), expectedScoreBoard);
+        assertEquals(responseEntity.getBody(), "ScoreBoard submission successfully");
     }
 
     @Test
