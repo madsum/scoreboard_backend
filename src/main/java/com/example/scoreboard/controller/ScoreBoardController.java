@@ -38,8 +38,8 @@ public class ScoreBoardController {
 
     @PostMapping(path = "/add/score")
     public ResponseEntity<?> addOrUpdate(@RequestBody ScoreBoard scoreBoard) {
-        boardRepository.save(scoreBoard);
-        return new ResponseEntity<>("ScoreBoard submission successfully", HttpStatus.OK);
+        ScoreBoard  savedScoreBoard = boardRepository.save(scoreBoard);
+        return new ResponseEntity<ScoreBoard>(savedScoreBoard, HttpStatus.OK);
     }
 
     @PutMapping(path = "/update/score")
