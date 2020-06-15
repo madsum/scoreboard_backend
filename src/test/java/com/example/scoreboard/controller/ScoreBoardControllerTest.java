@@ -51,7 +51,7 @@ class ScoreBoardControllerTest {
 
         // act
         when(scoreBoardRepository.findById(1l)).thenReturn(java.util.Optional.of(expectedScoreBoard));
-        ScoreBoard actualScoreBoard = scoreBoardController.findById(1l);
+        ScoreBoard actualScoreBoard = scoreBoardController.getById(1l);
 
         // assert
         assertNotNull(actualScoreBoard);
