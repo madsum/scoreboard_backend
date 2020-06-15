@@ -103,6 +103,6 @@ class ScoreBoardControllerTest {
         // assert
         verify(scoreBoardRepository, times(1)).deleteById(eq(id));
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(responseEntity.getBody(), "Score board deleted successfully");
+        assertEquals(responseEntity.getBody(), "Score deleted successfully");
     }
 }
