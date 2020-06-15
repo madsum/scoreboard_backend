@@ -3,7 +3,6 @@ package com.example.scoreboard.controller;
 import com.example.scoreboard.model.ScoreBoard;
 import com.example.scoreboard.repository.ScoreBoardRepository;
 import com.example.scoreboard.util.TestDataUtil;
-import org.hamcrest.Matcher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -14,8 +13,6 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -90,7 +87,7 @@ class ScoreBoardControllerTest {
     @Test
     void testDeleteScoreBoard() {
         // arrange
-        long id= 1L;
+        long id = 1L;
 
         // act
         ResponseEntity<?> responseEntity = scoreBoardController.deleteScoreBoard(id);
