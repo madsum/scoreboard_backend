@@ -50,7 +50,12 @@ public class ScoreBoardController {
 
     @DeleteMapping(path = "/delete/score/{id}")
     public ResponseEntity<?> deleteScoreBoard(@PathVariable(required = true) long id){
-        boardRepository.deleteById(id);
+        try {
+            boardRepository.deleteById(id);
+        }catch (Exception ex){
+          return new ResponseEntity<>("Score not found", HttpStatus.NOT_FOUND);
+        }
+
         return new ResponseEntity<>("Score deleted successfully", HttpStatus.OK);
     }
 }

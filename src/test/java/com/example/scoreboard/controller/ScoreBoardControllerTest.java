@@ -95,7 +95,7 @@ class ScoreBoardControllerTest {
     @Test
     void testDeleteScoreBoard() {
         // arrange
-        long id=1L;
+        long id= 1L;
 
         // act
         ResponseEntity<?> responseEntity = scoreBoardController.deleteScoreBoard(id);
