@@ -38,14 +38,24 @@ public class ScoreBoardController {
 
     @PostMapping(path = "/add/score")
     public ResponseEntity<?> addOrUpdate(@RequestBody ScoreBoard scoreBoard) {
-        ScoreBoard  savedScoreBoard = boardRepository.save(scoreBoard);
-        return new ResponseEntity<ScoreBoard>(savedScoreBoard, HttpStatus.OK);
+        try {
+            boardRepository.save(scoreBoard);
+        }catch (Exception ex){
+            return new ResponseEntity<>(ex.getMessage(),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(scoreBoard, HttpStatus.OK);
     }
 
     @PutMapping(path = "/update/score")
     public ResponseEntity<?> updateScore(@RequestBody ScoreBoard scoreBoard) {
-        boardRepository.save(scoreBoard);
-        return new ResponseEntity<>("ScoreBoard update successfully", HttpStatus.OK);
+        try {
+            boardRepository.save(scoreBoard);
+        }catch (Exception ex){
+            return new ResponseEntity<>(ex.getMessage(),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(scoreBoard, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/delete/score/{id}")
@@ -55,7 +65,6 @@ public class ScoreBoardController {
         }catch (Exception ex){
           return new ResponseEntity<>("Score not found", HttpStatus.NOT_FOUND);
         }
-
         return new ResponseEntity<>("Score deleted successfully", HttpStatus.OK);
     }
 }
